@@ -34,6 +34,14 @@ public class HighscoreTable : MonoBehaviour
             }
         }
 
+        if (highscores.highscoreEntryList.Count < 10)
+        {
+            for (int h = highscores.highscoreEntryList.Count; h > 10; h --)
+            {
+                highscores.highscoreEntryList.RemoveAt(10);
+            }
+        }
+
         highscoreEntryTransformList = new List<Transform>();
         foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
         {
@@ -123,6 +131,13 @@ public class HighscoreTable : MonoBehaviour
         highscores.highscoreEntryList.Add(highscoreEntry);
 
         string json = JsonUtility.ToJson(highscores);
+        if (highscores.highscoreEntryList.Count < 10)
+        {
+            for (int h = highscores.highscoreEntryList.Count; h > 10; h--)
+            {
+                highscores.highscoreEntryList.RemoveAt(10);
+            }
+        }
         PlayerPrefs.SetString("highscoreTable", json);
         PlayerPrefs.Save();
     }
