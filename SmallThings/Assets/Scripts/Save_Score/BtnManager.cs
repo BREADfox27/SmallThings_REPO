@@ -7,6 +7,19 @@ public class BtnManager : MonoBehaviour
     public void ClickBtn()
     {
         highscoreTable.playerScore = highscoreTable.playerScore + 1;
-        Debug.Log(highscoreTable.playerScore);
+        highscoreTable.playerScoreText.text = "SCORE: " + highscoreTable.playerScore;
+    }
+
+    public void ReadName(string name)
+    {
+        highscoreTable.playerName = name;
+    }
+
+    public void Save()
+    {
+        highscoreTable.AddHighscoreEntry(highscoreTable.playerScore, highscoreTable.playerName);
+        highscoreTable.playerScore = 0;
+        highscoreTable.playerScoreText.text = "SCORE: " + highscoreTable.playerScore;
+        highscoreTable.playerName = null;
     }
 }

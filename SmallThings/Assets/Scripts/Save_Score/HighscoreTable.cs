@@ -11,6 +11,7 @@ public class HighscoreTable : MonoBehaviour
     private List<Transform> highscoreEntryTransformList;
 
     public int playerScore;
+    public TextMeshProUGUI playerScoreText;
     public string playerName;
 
     private void Awake()
@@ -38,7 +39,7 @@ public class HighscoreTable : MonoBehaviour
 
         if (highscores.highscoreEntryList.Count < 10)
         {
-            for (int h = highscores.highscoreEntryList.Count; h > 10; h --)
+            for (int h = highscores.highscoreEntryList.Count; h > 10; h--)
             {
                 highscores.highscoreEntryList.RemoveAt(10);
             }
