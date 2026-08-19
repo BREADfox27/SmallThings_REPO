@@ -8,7 +8,7 @@ public class HighscoreTable : MonoBehaviour
     private Transform entryContrainer;
     private Transform entryTemplate;
 
-    private List<Transform> highscoreEntryTransformList;
+    public List<Transform> highscoreEntryTransformList;
 
     public int playerScore;
     public TextMeshProUGUI playerScoreText;
@@ -21,6 +21,11 @@ public class HighscoreTable : MonoBehaviour
 
         entryTemplate.gameObject.SetActive(false);
 
+        StartHighscoreTable();
+    }
+
+    public void StartHighscoreTable()
+    {
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 

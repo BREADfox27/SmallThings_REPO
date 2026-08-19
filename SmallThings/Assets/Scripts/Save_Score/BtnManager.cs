@@ -17,7 +17,15 @@ public class BtnManager : MonoBehaviour
 
     public void Save()
     {
+        foreach (Transform obj in highscoreTable.highscoreEntryTransformList)
+        {
+            Destroy(obj.gameObject);
+        }
+
+        highscoreTable.highscoreEntryTransformList.Clear();
         highscoreTable.AddHighscoreEntry(highscoreTable.playerScore, highscoreTable.playerName);
+        highscoreTable.StartHighscoreTable();
+
         highscoreTable.playerScore = 0;
         highscoreTable.playerScoreText.text = "SCORE: " + highscoreTable.playerScore;
         highscoreTable.playerName = null;

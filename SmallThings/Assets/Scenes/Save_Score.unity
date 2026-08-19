@@ -2065,7 +2065,7 @@ GameObject:
   - component: {fileID: 1188416768}
   m_Layer: 5
   m_Name: HighscoreEntryTemplate
-  m_TagString: Untagged
+  m_TagString: Template
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2457,6 +2457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2173dd9f46dd0f245a1245f333e332c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HighscoreTable
+  highscoreEntryTransformList: []
   playerScore: 0
   playerScoreText: {fileID: 383302190}
   playerName: 
