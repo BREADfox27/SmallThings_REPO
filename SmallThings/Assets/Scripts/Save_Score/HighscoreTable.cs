@@ -1,6 +1,5 @@
 using UnityEngine;
 using TMPro;
-using NUnit.Framework;
 using System.Collections.Generic;
 
 public class HighscoreTable : MonoBehaviour
@@ -8,8 +7,7 @@ public class HighscoreTable : MonoBehaviour
     private Transform entryContrainer;
     private Transform entryTemplate;
 
-    private List<HighscoreEntry> HighscoreEntryList;
-    private List<Transform> HighscoreEntryTransformList;
+    private List<Transform> highscoreEntryTransformList;
 
 
     private void Awake()
@@ -19,22 +17,26 @@ public class HighscoreTable : MonoBehaviour
 
         entryTemplate.gameObject.SetActive(false);
 
-        HighscoreEntryList = new List<HighscoreEntry>()
-        {
-            new HighscoreEntry{ score = 10000, name = "AAA" },
-            new HighscoreEntry{ score = 21435, name = "PAS" },
-            new HighscoreEntry{ score = 567, name = "DIN" },
-            new HighscoreEntry{ score = 12677, name = "LOP" },
-            new HighscoreEntry{ score = 1, name = "KIK" },
-            new HighscoreEntry{ score = 96895, name = "BUT" },
-            new HighscoreEntry{ score = 2137724, name = "QER" },
-            new HighscoreEntry{ score = 1300, name = "MMM" },
-        };
+        string jsonString = PlayerPrefs.GetString("highscoreTable");
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
-        HighscoreEntryTransformList = new List<Transform>();
-        foreach (HighscoreEntry highscoreEntry in HighscoreEntryList)
+        for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
         {
-            CreateHighscoreEntryTransform(highscoreEntry, entryContrainer, HighscoreEntryTransformList);
+            for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
+            {
+                if (highscores.highscoreEntryList[j].score > highscores.highscoreEntryList[i].score)
+                {
+                    HighscoreEntry tmp = highscores.highscoreEntryList[i];
+                    highscores.highscoreEntryList[i] = highscores.highscoreEntryList[j];
+                    highscores.highscoreEntryList[j] = tmp;
+                }
+            }
+        }
+
+        highscoreEntryTransformList = new List<Transform>();
+        foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
+        {
+            CreateHighscoreEntryTransform(highscoreEntry, entryContrainer, highscoreEntryTransformList);
         }
     }
 
@@ -50,10 +52,21 @@ public class HighscoreTable : MonoBehaviour
         string rankString;
         switch (rank)
         {
-            default: rankString = rank + "TH"; break;
-            case 1: rankString = "1ST"; break;
-            case 2: rankString = "2ND"; break;
-            case 3: rankString = "3RD"; break;
+            default:
+                rankString = rank + "TH";
+                break;
+
+            case 1:
+                rankString = "1ST";
+                break;
+
+            case 2:
+                rankString = "2ND";
+                break;
+
+            case 3:
+                rankString = "3RD";
+                break;
         }
 
         entryTransform.Find("PosText").GetComponent<TextMeshProUGUI>().text = rankString;
@@ -64,9 +77,38 @@ public class HighscoreTable : MonoBehaviour
         string name = highscoreEntry.name;
         entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().text = name;
 
+        entryTransform.Find("Background").gameObject.SetActive(rank % 2 == 1);
+
+        if (rank == 1)
+        {
+            entryTransform.Find("PosText").GetComponent<TextMeshProUGUI>().color = Color.cyan;
+            entryTransform.Find("ScoreText").GetComponent<TextMeshProUGUI>().color = Color.cyan;
+            entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().color = Color.cyan;
+        }
+
         transformList.Add(entryTransform);
     }
 
+    private void AddHighscoreEntry(int score, string name)
+    {
+        HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = name };
+
+        string jsonString = PlayerPrefs.GetString("highscoreTable");
+        Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
+
+        highscores.highscoreEntryList.Add(highscoreEntry);
+
+        string json = JsonUtility.ToJson(highscores);
+        PlayerPrefs.SetString("highscoreTable", json);
+        PlayerPrefs.Save();
+    }
+
+    private class Highscores
+    {
+        public List<HighscoreEntry> highscoreEntryList;
+    }
+    
+    [System.Serializable]
     private class HighscoreEntry
     {
         public int score;
