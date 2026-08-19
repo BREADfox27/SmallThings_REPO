@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class BtnManager : MonoBehaviour
 {
+    public HighscoreTable highscoreTable;
+    
     public void ClickBtn()
     {
-        Debug.Log("ClickED");
+        highscoreTable.playerScore = highscoreTable.playerScore + 1;
+        Debug.Log(highscoreTable.playerScore);
     }
 }

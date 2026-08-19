@@ -1063,6 +1063,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcc2f4ab72e3d8942b52a9a9848fb481, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BtnManager
+  highscoreTable: {fileID: 1242076312}
 --- !u!1 &966979443
 GameObject:
   m_ObjectHideFlags: 0

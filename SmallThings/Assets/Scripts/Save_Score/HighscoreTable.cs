@@ -123,9 +123,9 @@ public class HighscoreTable : MonoBehaviour
         transformList.Add(entryTransform);
     }
 
-    public void AddHighscoreEntry(int score, string name)
+    public void AddHighscoreEntry(int newScore, string newName)
     {
-        HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = name };
+        HighscoreEntry highscoreEntry = new HighscoreEntry { score = newScore, name = newName };
 
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
