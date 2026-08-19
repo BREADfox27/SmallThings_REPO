@@ -10,6 +10,8 @@ public class HighscoreTable : MonoBehaviour
 
     private List<Transform> highscoreEntryTransformList;
 
+    public int playerScore;
+    public string playerName;
 
     private void Awake()
     {
@@ -121,7 +123,7 @@ public class HighscoreTable : MonoBehaviour
         transformList.Add(entryTransform);
     }
 
-    private void AddHighscoreEntry(int score, string name)
+    public void AddHighscoreEntry(int score, string name)
     {
         HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = name };
 
