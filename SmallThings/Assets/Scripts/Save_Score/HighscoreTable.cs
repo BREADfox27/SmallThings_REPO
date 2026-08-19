@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class HighscoreTable : MonoBehaviour
 {
@@ -84,6 +85,29 @@ public class HighscoreTable : MonoBehaviour
             entryTransform.Find("PosText").GetComponent<TextMeshProUGUI>().color = Color.cyan;
             entryTransform.Find("ScoreText").GetComponent<TextMeshProUGUI>().color = Color.cyan;
             entryTransform.Find("NameText").GetComponent<TextMeshProUGUI>().color = Color.cyan;
+        }
+
+        ColorUtility.TryParseHtmlString("#FFD200", out Color color1);
+        ColorUtility.TryParseHtmlString("#C6C6C6", out Color color2);
+        ColorUtility.TryParseHtmlString("#B76F56", out Color color3);
+
+        switch (rank)
+        {
+            default:
+                entryTransform.Find("Trophy").gameObject.SetActive(false);
+                break;
+
+            case 1:
+                entryTransform.Find("Trophy").GetComponent<Image>().color = color1;
+                break;
+
+            case 2:
+                entryTransform.Find("Trophy").GetComponent<Image>().color = color2;
+                break;
+
+            case 3:
+                entryTransform.Find("Trophy").GetComponent<Image>().color = color3;
+                break;
         }
 
         transformList.Add(entryTransform);
