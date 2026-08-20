@@ -29,6 +29,11 @@ public class HighscoreTable : MonoBehaviour
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
+        if (highscores == null || highscores.highscoreEntryList == null)
+        {
+            highscores = new Highscores { highscoreEntryList = new List<HighscoreEntry>() };
+        }
+
         for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
         {
             for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
@@ -131,6 +136,11 @@ public class HighscoreTable : MonoBehaviour
         string jsonString = PlayerPrefs.GetString("highscoreTable");
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
+        if (highscores == null)
+        {
+            highscores = new Highscores { highscoreEntryList = new List<HighscoreEntry>() };
+        }
+
         highscores.highscoreEntryList.Add(highscoreEntry);
 
         string json = JsonUtility.ToJson(highscores);
@@ -140,7 +150,7 @@ public class HighscoreTable : MonoBehaviour
 
     private class Highscores
     {
-        public List<HighscoreEntry> highscoreEntryList;
+        public List<HighscoreEntry> highscoreEntryList = new List<HighscoreEntry>();
     }
     
     [System.Serializable]
